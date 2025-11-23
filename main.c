@@ -177,11 +177,16 @@ int removeInicio(Lista *li){
 
 void mostraLista(Lista *li){
 	Elem *no = *li;
-	printf("\nLista de pacientes em espera:\nGrau de risco:      Senha:\n");
-	while(no != NULL){	
-        printf("%d                   %d\n", no->dado, no->senha);
-        no = no->prox;
-    }
+	if(no==NULL){
+	    printf("\nSem pacientes na espera\n");
+	}else{
+    	printf("\nLista de pacientes em espera:\nGrau de risco:      Senha:\n");
+    	while(no != NULL){	
+            printf("%d                   %d\n", no->dado, no->senha);
+            no = no->prox;
+        }	    
+	}
+
 }
 
 void limpaTela(){
