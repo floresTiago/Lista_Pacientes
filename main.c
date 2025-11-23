@@ -206,7 +206,9 @@ int  main(){
                 printf("\nSistema finalizado\n");
             break;
 	         case 1:
-	            printf("Grau de urgência: ");
+	            limpaTela();
+	            printf("Protocolo Manchester:\n 5 - Emergente\n 4 - Urgente\n 3 - Urgente\n 2 - Pouco Urgente\n 1 - Sem Urgencia\n");
+	            printf("\nGrau de urgência (numero): ");
 	            scanf("%d", &gravidade);
 	            senha++;
 	            limpaTela();
