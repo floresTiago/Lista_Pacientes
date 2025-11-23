@@ -131,27 +131,21 @@ int insereOrdenado(Lista* li, int x, int senha){ // posso inserir nos 3 casos, n
 	no->dado = x; 	// NO recebe dados
 	no->senha = senha;
 	no->prox = NULL;	// NO->PROX aponta para NULL
-	if(*li == NULL || (*li)->dado < x){
+    if(*li == NULL || (*li)->dado < x){
         no->prox = *li;
         *li = no;
-        
-        return 1;
-    }else{				//Sen�o
-        Elem *ant = *li;        // anterior
-        Elem *atual = (*li)->prox; // atual
-    
-        while(atual != NULL && atual->dado >= x){
-            ant = atual;
-            atual = atual->prox;
-        }
-    
-        // Inserindo no meio ou fim
-        ant->prox = no;
-        no->prox = atual;
-        
         return 1;
     }
-	return 1;
+
+    Elem *aux = *li;
+    while(aux->prox != NULL && aux->prox->dado >= x){
+        aux = aux->prox;
+    }
+
+    no->prox = aux->prox;
+    aux->prox = no;
+
+    return 1;
 }
 
 /****************************************************************************/
@@ -212,7 +206,7 @@ int  main(){
             break;
 	         case 1:
 	            limpaTela();
-	            printf("Protocolo Manchester:\n 5 - Emergente\n 4 - Urgente\n 3 - Urgente\n 2 - Pouco Urgente\n 1 - Sem Urgencia\n");
+	            printf("Protocolo Manchester:\n 5 - Emergente\n 4 - Muito Urgente\n 3 - Urgente\n 2 - Pouco Urgente\n 1 - Sem Urgencia\n");
 	            printf("\nGrau de urgência (numero): ");
 	            scanf("%d", &gravidade);
 	            senha++;
