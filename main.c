@@ -73,19 +73,7 @@ void liberaLista(Lista *li){  // passa a Lista* li
 /*      VERIFICAR O TAMANHO DA LISTA			                       	    */
 /* 		A fun��o verifica o tamonho da lista, contando quantos elementos h�	*/
 /****************************************************************************/
-int tamanhoDaLista(Lista* li){
-	if(li == NULL) return 0; // se o in�cio for NULL, retorna O, i.e. lista vazia
-    int cont = 0; 			 // uma vari�vel contatora
-    Elem* no = *li;			// 'no' auxiliar aponta para o in�cio da lista (*li)
-    while(no != NULL){		// Enquanto o 'no' for diferente de NULL, ou seja, enquanto n�o chegar ao final da Lista, percorre...
-    	cont++; 			// incrementa a vari�vel contadora
-    	no = no->prox;  	// 'no' aponta para o pr�ximo, percorrendo toda a Lista
-	}
-	return cont;			// ap�s percorrer a lista, retorna o valor de cont
-	
-	//      CHAMADA NO MAIN
- 	//      int x = tamanhoDaLista(li); 
-}
+
 
 /****************************************************************************/
 /*      VERIFICAR SE LISTA CHEIA			                       		    */
