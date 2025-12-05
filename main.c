@@ -3,14 +3,14 @@
 #include <malloc.h>
 #include <conio.h>
 
-struct elemento{
-	int dado, senha;
-	struct elemento *prox;
+struct paciente{
+	int gravidade, senha;
+	struct paciente *prox;
 };
 
-typedef struct elemento Elem;
+typedef struct paciente Paciente;
 
-typedef struct elemento* Lista;
+typedef struct paciente* Lista;
 
 Lista* li;
 
@@ -25,7 +25,7 @@ Lista* criarLista(){
 
 void liberaLista(Lista *li){
 	if(li != NULL){
-		Elem* no;
+		Paciente* no;
 		while ((*li) != NULL){
 			no = *li;
 			*li = (*li)->prox;
@@ -39,7 +39,7 @@ int insereOrdenado(Lista* li, int gravidade, int senha){
 	if(li == NULL){
 	    return 0;
 	} 
-	Elem* no = (Elem*) malloc(sizeof(Elem));
+	Paciente* no = (Paciente*) malloc(sizeof(Paciente));
 	if(no == NULL){
 	    return 0;
 	}
@@ -48,17 +48,17 @@ int insereOrdenado(Lista* li, int gravidade, int senha){
 	    return 0;
 	}
 	
-	no->dado = gravidade;
+	no->gravidade = gravidade;
 	no->senha = senha;
 	no->prox = NULL;
-    if(*li == NULL || (*li)->dado < gravidade){
+    if(*li == NULL || (*li)->gravidade < gravidade){
         no->prox = *li;
         *li = no;
         return 1;
     }
 
-    Elem *aux = *li;
-    while(aux->prox != NULL && aux->prox->dado >= gravidade){
+    Paciente *aux = *li;
+    while(aux->prox != NULL && aux->prox->gravidade >= gravidade){
         aux = aux->prox;
     }
 
@@ -76,7 +76,7 @@ int removeInicio(Lista *li){
 	    return 0;
 	} 
 	
-	Elem *no = *li;
+	Paciente *no = *li;
 	printf("\nProximo paciente:\nSenha: %d\n", no->senha);
 	*li = no->prox;
 	free(no);
@@ -84,13 +84,13 @@ int removeInicio(Lista *li){
 }
 
 void mostraLista(Lista *li){
-	Elem *no = *li;
+	Paciente *no = *li;
 	if(no==NULL){
 	    printf("\nSem pacientes na espera\n");
 	}else{
     	printf("\nLista de pacientes em espera:\nGrau de risco:      Senha:\n");
     	while(no != NULL){	
-            printf("%d                   %d\n", no->dado, no->senha);
+            printf("%d                   %d\n", no->gravidade, no->senha);
             no = no->prox;
         }	    
 	}
