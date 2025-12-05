@@ -35,16 +35,6 @@ void liberaLista(Lista *li){
 	}
 }
 
-int listaVazia(Lista* li){
-	if(li == NULL){
-	    return 1;
-	}
-    if(*li == NULL){
-        return 1;
-    }
-	return 0;
-}
-
 int insereOrdenado(Lista* li, int gravidade, int senha){
 	if(li == NULL){
 	    return 0;
