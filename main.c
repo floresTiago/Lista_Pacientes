@@ -3,142 +3,72 @@
 #include <malloc.h>
 #include <conio.h>
 
-/****************************************************************************/
-/*       ESTRUTURA ELEMENTO					                                */ 
-/*       Esta estrutura armazar� as informa��es da Lista					*/
-/****************************************************************************/
 struct elemento{
 	int dado, senha;
 	struct elemento *prox;
 };
+
 typedef struct elemento Elem;
 
-/****************************************************************************/
-/*       Defini��o de um ponteiro *Lista do tipo elemento                   */ 
-/*       Mas quem � o Elemento?            				                    */ 
-/*       - � a estrutura da Lista 						                    */ 
-/*       que contem o Dado e ponteiro para o pr�ximo elemento da lista      */ 
-/****************************************************************************/
 typedef struct elemento* Lista;
 
-/*       Programa Principal 							    				*/ 
-/*       criando um ponteiro para a Lista (aponta para o in�cio da Lista);  */ 
-/*       Lembre-se: Lista � um ponteiro para a estrutura elemento;			*/
-/*       ----																*/
-/*		 Nesse caso, *li � um "ponteiro para ponteiro" [**] onde cada		*/ 
-/*       elemento (ou n�) da lista [dado, *prox] � um ponteiro, o *li � um  */
-/*       "ponteiro para ponteiro" [**] que aponta para Lista [dado, *prox]	*/
-/*       ----																*/
-/*       Um "ponteiro para ponteiro" consegue armazenar o endere�o de um	*/
-/*       ponteiro															*/
-Lista* li; // li � um ponteiro para ponteiro para a struct Elemento
+Lista* li;
 
-/*      CRIAR LISTA						                        	        */
-/* 		A fun��o criarLista retorna uma lista* (lista asterisco)			*/
 Lista* criarLista(){
-	Lista* li = (Lista*) malloc(sizeof(Lista));/* malloc para reservar mem�ria para o primeiro n� da Lista */
+	Lista* li = (Lista*) malloc(sizeof(Lista));
 	
-	if(li != NULL)  // se der certo a aloca��o o meu primeiro n� vai apontar para NULL
-		*li = NULL; // ao pontar para NULL representa uma lista vazia
-			  		// ver a 1� linha do main
-	return li;
- 	
- 	//      CHAMADA NO MAIN
- 	//      li = criarLista();   
-
-}
-
-/****************************************************************************/
-/*      LIBERAR LISTA						                        	    */
-/* 		A fun��o libera a lista quando eu n�o for mais usar ela				*/
-/*		Ela recebe como par�metro a lista que pretende liberar, nesse caso  */
-/*      queremos liberar a Lista *li										*/
-/****************************************************************************/
-void liberaLista(Lista *li){  // passa a Lista* li
-	if(li != NULL){ // se tivermos uma lista v�lida, come�amos a esvazi�-la.
-		Elem* no;   // defino um ponteiro Elem (AUXILIAR)
-		while ((*li) != NULL){ // pego o 1� elemento da lista (o in�cio da Lista). Enquanto ela for diferente de NULL, ou seja, enquanto eu n�o tiver uma lista vazia...
-			no = *li;           // o meu NO recebe *li, ou seja, o meu NO recebe o in�cio da Lista (*li)...
-			*li = (*li)->prox; // o in�cio da lista (*li) vai apontar par ao pr�ximo elemento da lista (prox) e...
-			free(no);			// vamos liberar o NO, que era o antigo in�cio. Assim, nunca percemos a refer�ncia do in�cio da Lista
-		}						// repete todo o processo at� eliminar todos os elementos lista.
-		free(li);  				// quanto chegar em NULL, a Lista* li � liberada.
+	if(li != NULL){
+	    *li = NULL; 
 	}
-	
-	//      CHAMADA NO MAIN
- 	//      liberaLista(li); 
+	return li;
 }
 
-/****************************************************************************/
-/*      VERIFICAR O TAMANHO DA LISTA			                       	    */
-/* 		A fun��o verifica o tamonho da lista, contando quantos elementos h�	*/
-/****************************************************************************/
-
-
-/****************************************************************************/
-/*      VERIFICAR SE LISTA CHEIA			                       		    */
-/* 		A fun��o verifica se a lista esta cheia								*/
-/*		Embora saibamos que a lista ser� cheia se acabar a m�m�ria do PC	*/
-/****************************************************************************/
-int listaCheia(Lista* li){
-	return 0;			// retorna falso
-			
-	//      CHAMADA NO MAIN
- 	//      int x = listaCheia(li); 
- 	// 		if(listaCheia(li))
+void liberaLista(Lista *li){
+	if(li != NULL){
+		Elem* no;
+		while ((*li) != NULL){
+			no = *li;
+			*li = (*li)->prox;
+			free(no);
+		}
+		free(li);
+	}
 }
 
-/****************************************************************************/
-/*      VERIFICAR SE LISTA VAZIA			                       		    */
-/* 		A fun��o verifica se a lista esta vazia								*/
-/*		*/
-/****************************************************************************/
 int listaVazia(Lista* li){
-	if(li == NULL)	// se lista for nula li== NULL, retorna verdadeiro 
-		  return 1;
-	if(*li == NULL)	// se o conte�do da lista for nula *li== NULL, retorna verdadeiro 
-		  return 1;
-	return 0;			// retorna falso, ou seja, a Lista n�o esta vazia
-			
-	//      CHAMADA NO MAIN
- 	//      int x = listaVazia(li); 
- 	// 		if(listaVazia(li))
+	if(li == NULL){
+	    return 1;
+	}
+    if(*li == NULL){
+        return 1;
+    }
+	return 0;
 }
 
-/****************************************************************************/
-/*      INSERIR ELEMENTO NA LISTA				                       		*/
-/*		Mas sempre temos que verificar a condi��o da nossa lista ao inserir */
-/*      elementos em uma lista vazio.										*/
-/* -------------------------------------------------------------------------*/
-/*      O que acontece?														*/
-/*		Quando criamos uma lista, ela � vazia, onde � reservado espa�o para */
-/*		o conte�do e um ponteiro apontado para o prox.						*/
-/*		Nesse caso, o INICIO para apontar para o NO, e o PROX para NULL, ou */
-/* 		para o pr�prio INICIO												*/
-/****************************************************************************/
-
-int insereOrdenado(Lista* li, int x, int senha){ // posso inserir nos 3 casos, no inicio, no meio, ouno fim
-	if(li == NULL) return 0; //falso, lista n�o existe
-	Elem* no = (Elem*) malloc(sizeof(Elem)); // aloco em mem�ria o novo Elem NO
-	if(no == NULL) return 0; //falso, n�o conseguiu alocar NO
-	
-	if(x<1||x>5){
-	    printf("\nGrau de risco não exisente\n");
+int insereOrdenado(Lista* li, int gravidade, int senha){
+	if(li == NULL){
+	    return 0;
+	} 
+	Elem* no = (Elem*) malloc(sizeof(Elem));
+	if(no == NULL){
+	    return 0;
+	}
+	if(gravidade<1||gravidade>5){
+	    printf("\nGrau de risco não existente\n");
 	    return 0;
 	}
 	
-	/***** implementar **********/ 	
-	no->dado = x; 	// NO recebe dados
+	no->dado = gravidade;
 	no->senha = senha;
-	no->prox = NULL;	// NO->PROX aponta para NULL
-    if(*li == NULL || (*li)->dado < x){
+	no->prox = NULL;
+    if(*li == NULL || (*li)->dado < gravidade){
         no->prox = *li;
         *li = no;
         return 1;
     }
 
     Elem *aux = *li;
-    while(aux->prox != NULL && aux->prox->dado >= x){
+    while(aux->prox != NULL && aux->prox->dado >= gravidade){
         aux = aux->prox;
     }
 
@@ -148,25 +78,19 @@ int insereOrdenado(Lista* li, int x, int senha){ // posso inserir nos 3 casos, n
     return 1;
 }
 
-/****************************************************************************/
-/*      REMOVER ELEMENTO NA LISTA				                       		*/
-/*		Mas sempre temos que verificar a consi��o da nossa lista 			*/
-/*		CUIDADOS!!!															*/
-/*		- N�o posso remover algo de uma lista vazia							*/
-/*		- removendo o �ltimo n�, a lista fica vazia							*/
-/****************************************************************************/
-
 int removeInicio(Lista *li){
-	if(li == NULL) return 0; //falso, lista n�o existe
-	if((*li) == NULL) return 0; //falso, lista vazia
+	if(li == NULL){
+	    return 0;
+	} 
+	if((*li) == NULL){
+	    return 0;
+	} 
 	
-	Elem *no = *li; // NO aponta para INICIO
+	Elem *no = *li;
 	printf("\nProximo paciente:\nSenha: %d\n", no->senha);
-	*li = no->prox; //  INICIO aponta para o NO->PROX
-	free(no);	    // Libera o NO 
+	*li = no->prox;
+	free(no);
 	return 1;
- 	//      CHAMADA NO MAIN
- 	//      int x = removeInicio(li); 	
 }
 
 void mostraLista(Lista *li){
@@ -192,9 +116,9 @@ void limpaTela(){
 }
 
 int  main(){
-  	 int opcao, gravidade, senha=0;
-	 Lista* myList;
-	 myList = criarLista();
+  	int opcao, gravidade, senha=0;
+	Lista* myList;
+	myList = criarLista();
 	 
     do{
         printf("\nSelecione uma opção:\n\n1. Adicionar paciente\n2. Chamar proximo paciente\n3. Mostrar lista de pacientes\n0. Sair\n\n");
@@ -204,32 +128,32 @@ int  main(){
                 limpaTela();
                 printf("\nSistema finalizado\n");
             break;
-	         case 1:
+            case 1:
 	            limpaTela();
-	            printf("Protocolo Manchester:\n 5 - Emergente\n 4 - Muito Urgente\n 3 - Urgente\n 2 - Pouco Urgente\n 1 - Sem Urgencia\n");
+	            printf("Protocolo Manchester:\n 5 - Emergente (VERMELHO)\n 4 - Muito Urgente (LARANJA)\n 3 - Urgente (AMARELO)\n 2 - Pouco Urgente (VERDE)\n 1 - Sem Urgencia (AZUL)\n");
 	            printf("\nGrau de urgência (numero): ");
 	            scanf("%d", &gravidade);
 	            senha++;
 	            limpaTela();
 	            insereOrdenado(myList, gravidade, senha);
-	         break;
-	         case 2:
+	        break;
+	        case 2:
 	            limpaTela();
 	            removeInicio(myList);
-	         break;
-	         case 3:
+	        break;
+	        case 3:
 	            limpaTela();
 	            mostraLista(myList);
-	         break;
-	         default:
+	        break;
+	        default:
 	            limpaTela();
 	            printf("\nOpção Inválida\n");
-	         break;
-	     }
-	 }while(opcao!=0);
+	        break;
+	    }
+	}while(opcao!=0);
 	 
-	 liberaLista(myList);
-	 getch();
- 
- return 0;    
+	liberaLista(myList);
+	getch();
+	 
+	return 0;    
 }
