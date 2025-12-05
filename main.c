@@ -119,7 +119,6 @@ int  main(){
   	int opcao, gravidade, senha=0;
 	Lista* myList;
 	myList = criarLista();
-	 
     do{
         printf("\nSelecione uma opção:\n\n1. Adicionar paciente\n2. Chamar proximo paciente\n3. Mostrar lista de pacientes\n0. Sair\n\n");
         scanf("%d",&opcao);
@@ -151,9 +150,7 @@ int  main(){
 	        break;
 	    }
 	}while(opcao!=0);
-	 
 	liberaLista(myList);
 	getch();
-	 
 	return 0;    
 }
